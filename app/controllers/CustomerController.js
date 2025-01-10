@@ -2,7 +2,7 @@ const { query } = require("express");
 const Customer = require("../models/CustomerModel");
 
 module.exports = {
-  index: (req, res, next) => {
+  index: (_req, res) => {
     Customer.find({})
       .then((result) => {
         res.status(201).json(result);
@@ -15,14 +15,10 @@ module.exports = {
       });
   },
 
-  add: (req, res, next) => {
+  add: (req, res) => {
     const newCustomer = new Customer({
       name: req.body.name,
-      address: {
-        street: req.body.address.street,
-        city: req.body.address.city,
-        zipCode: req.body.address.zipCode,
-      },
+      address: req.body.address,
       taxNumber: req.body.taxNumber,
     });
 
@@ -42,14 +38,10 @@ module.exports = {
       });
   },
 
-  update: (req, res, next) => {
+  update: (req, res) => {
     const updatedCustomer = {
       name: req.body.name,
-      address: {
-        street: req.body.address.street,
-        city: req.body.address.city,
-        zipCode: req.body.address.zipCode,
-      },
+      address: req.body.address,
       taxNumber: req.body.taxNumber,
     };
 
@@ -76,19 +68,16 @@ module.exports = {
       });
   },
 
-  find: (req, res, next) => {
+  find: (req, res) => {
     Customer.findById(req.params.id)
-      .then((result) => {
-        if (!result) {
+      .then((customer) => {
+        if (!customer) {
           res.status(400).json({
             message: "No customer found",
             customerId: req.params.id,
           });
         } else {
-          res.status(200).json({
-            message: "Customer found",
-            customer: result,
-          });
+          res.status(200).json(customer);
         }
       })
       .catch((err) => {
@@ -99,7 +88,7 @@ module.exports = {
       });
   },
 
-  delete: (req, res, next) => {
+  delete: (req, res) => {
     Customer.findByIdAndDelete(req.params.id)
       .then((result) => {
         if (!result) {
