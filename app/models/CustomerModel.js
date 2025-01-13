@@ -8,8 +8,12 @@ const Customer = new mongoose.Schema({
     zipCode: { type: String, required: true },
   },
   taxNumber: { type: String, required: true },
+  actions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "actions"
+    },
+  ],
 });
 
 module.exports = mongoose.model("Customer", Customer);
-
-  

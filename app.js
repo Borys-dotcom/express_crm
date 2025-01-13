@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const customerRouter = require("./app/routers/CustomerRouter");
+const actionRouter = require("./app/routers/ActionRouter");
 const app = express();
 
 // Mongodb
@@ -21,6 +22,7 @@ app.use(cors());
 
 // Routers
 app.use("/customer", customerRouter);
+app.use("/action", actionRouter);
 
 app.listen(config.app.port, () => {
   console.log("express server operational");

@@ -1,8 +1,7 @@
-const { query } = require("express");
 const Customer = require("../models/CustomerModel");
 
 module.exports = {
-  index: (_req, res) => {
+  index: (req, res) => {
     Customer.find({})
       .then((result) => {
         res.status(201).json(result);

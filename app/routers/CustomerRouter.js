@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const CustomerController = require("../controllers/CustomerController");
 
-// module.exports = () => {
     // GET 
     router.get("/", CustomerController.index);
     //POST add
@@ -13,8 +12,5 @@ const CustomerController = require("../controllers/CustomerController");
     router.post("/find/:id", CustomerController.find)
     //POST delete/:id
     router.delete("/delete/:id", CustomerController.delete)
-
-    // return router
-// }
 
 module.exports = router
