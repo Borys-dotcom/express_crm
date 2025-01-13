@@ -4,8 +4,6 @@ const Customer = require("../models/CustomerModel");
 module.exports = {
   index: (req, res) => {
 
-    console.log({_id: req.params.id});
-
     Action.find(req.params.id ? {customerRef: req.params.id} : {})
     .then((actions) => {
       res.status(200).json(actions);

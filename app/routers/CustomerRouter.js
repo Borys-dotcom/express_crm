@@ -6,10 +6,10 @@ const CustomerController = require("../controllers/CustomerController");
     router.get("/", CustomerController.index);
     //POST add
     router.post("/add", CustomerController.add)
-    //POST update/:id
-    router.post("/update/:id", CustomerController.update)
+    //PUT update/:id
+    router.put("/update/:id", CustomerController.update)
     //POST find/:id
-    router.post("/find/:id", CustomerController.find)
+    router.get("/find/:id", CustomerController.find)
     //POST delete/:id
     router.delete("/delete/:id", CustomerController.delete)
 
