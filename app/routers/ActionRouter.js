@@ -5,6 +5,8 @@ const actionController = require("../controllers/ActionController");
     // GET
     router.get("/:id?", actionController.index)
     // POST add
-    router.post("/add/", actionController.create)
+    router.post("/add/:id", actionController.create)
+    // DELETE add
+    router.delete("/delete/:id", actionController.delete)
 
 module.exports = router
