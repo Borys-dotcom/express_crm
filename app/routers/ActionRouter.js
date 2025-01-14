@@ -2,10 +2,14 @@ const express = require("express");
 const router = express.Router();
 const actionController = require("../controllers/ActionController");
 
-    // GET
+    // GET index - find all actions for customer
     router.get("/:id?", actionController.index)
+    // GET find - find single action
+    router.get("/find/:id?", actionController.find)
     // POST add
-    router.post("/add/:id", actionController.create)
+    router.post("/add/:customerId", actionController.create)
+    // POST edit
+    router.put("/edit/:id", actionController.edit)
     // DELETE add
     router.delete("/delete/:id", actionController.delete)
 

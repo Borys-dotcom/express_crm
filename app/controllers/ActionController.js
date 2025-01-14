@@ -14,12 +14,24 @@ module.exports = {
       });
   },
 
+  find: (req, res) => {
+    Action.find({ _id: req.params.id })
+      .then((actions) => {
+        res.status(200).json(actions);
+      })
+      .catch((err) => {
+        res.status(400).json({
+          message: "Error while searching for action.",
+        });
+      });
+  },
+
   create: (req, res) => {
     const newAction = new Action({
       type: req.body.type,
       description: req.body.description,
       date: req.body.date,
-      customerRef: req.params.id,
+      customerRef: req.params.customerId,
     });
 
     newAction
@@ -30,7 +42,7 @@ module.exports = {
         });
 
         Customer.updateOne(
-          { _id: req.params.id },
+          { _id: req.params.customerId },
           { $push: { actions: newAction._id } }
         )
           .then(() => {
@@ -68,5 +80,20 @@ module.exports = {
           error: err,
         });
       });
+  },
+
+  edit: (req, res) => {
+    let actionId = req.params.id;
+
+    Action.findByIdAndUpdate(actionId, req.body)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(400).json({
+        error: err
+      })
+    })
+  
   },
 };
