@@ -69,6 +69,8 @@ module.exports = {
 
   find: (req, res) => {
     Customer.findById(req.params.id)
+      .populate("actions")
+      .lean()
       .then((customer) => {
         if (!customer) {
           res.status(400).json({

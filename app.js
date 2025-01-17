@@ -2,8 +2,9 @@ const config = require("./config");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const customerRouter = require("./app/routers/CustomerRouter");
-const actionRouter = require("./app/routers/ActionRouter");
+const CustomerRouter = require("./app/routers/CustomerRouter");
+const ActionRouter = require("./app/routers/ActionRouter");
+const UserRouter = require("./app/routers/UserRouter");
 const app = express();
 
 // Mongodb
@@ -21,8 +22,9 @@ app.use(express.json());
 app.use(cors());
 
 // Routers
-app.use("/customer", customerRouter);
-app.use("/action", actionRouter);
+app.use("/customer", CustomerRouter);
+app.use("/action", ActionRouter);
+app.use("/user", UserRouter);
 
 app.listen(config.app.port, () => {
   console.log("express server operational");

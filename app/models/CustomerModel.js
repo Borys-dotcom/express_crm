@@ -11,7 +11,7 @@ const Customer = new mongoose.Schema({
   actions: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "actions"
+      ref: "Action"
     },
   ],
 });

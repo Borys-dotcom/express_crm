@@ -8,5 +8,7 @@ module.exports = {
         port: 27017,
         name: "crm",
         password: ""
-    }
+    },
+
+    tokenKey: "my_secret_password"
 }

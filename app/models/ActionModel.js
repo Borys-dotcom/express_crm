@@ -7,7 +7,11 @@ const Action = new mongoose.Schema({
     customerRef: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "customers"
-        }
+        },
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users"
+    }
 });
 
 module.exports = mongoose.model("Action", Action);
