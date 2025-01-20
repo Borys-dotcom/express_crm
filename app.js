@@ -5,6 +5,7 @@ const cors = require("cors");
 const CustomerRouter = require("./app/routers/CustomerRouter");
 const ActionRouter = require("./app/routers/ActionRouter");
 const UserRouter = require("./app/routers/UserRouter");
+const LoginMiddleware = require("./app/middlewares/LoginMiddleware");
 const app = express();
 
 // Mongodb
@@ -22,8 +23,10 @@ app.use(express.json());
 app.use(cors());
 
 // Routers
-app.use("/customer", CustomerRouter);
-app.use("/action", ActionRouter);
+app.use("/customer", LoginMiddleware, CustomerRouter);
+app.use("/action", LoginMiddleware, ActionRouter);
+// app.use("/customer", CustomerRouter);
+// app.use("/action", ActionRouter);
 app.use("/user", UserRouter);
 
 app.listen(config.app.port, () => {
