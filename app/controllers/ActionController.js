@@ -1,5 +1,6 @@
 const Action = require("../models/ActionModel");
 const Customer = require("../models/CustomerModel");
+const app = require("express")
 
 module.exports = {
   index: (req, res) => {
@@ -27,12 +28,9 @@ module.exports = {
   },
 
   create: (req, res) => {
-    const newAction = new Action({
-      type: req.body.type,
-      description: req.body.description,
-      date: req.body.date,
-      customerRef: req.params.customerId,
-    });
+
+    const newAction = new Action({...req.body, customerRef: req.params.customerId, creator: res.locals.customerId});
+    // const newAction = new Action({...req.body, customerRef: req.params.customerId});
 
     newAction
       .save()
@@ -46,7 +44,7 @@ module.exports = {
           { $push: { actions: newAction._id } }
         )
           .then(() => {
-            console.log("updated");
+            // console.log("updated");
           })
           .catch((err) => {
             console.log(err);

@@ -25,8 +25,6 @@ app.use(cors());
 // Routers
 app.use("/customer", LoginMiddleware, CustomerRouter);
 app.use("/action", LoginMiddleware, ActionRouter);
-// app.use("/customer", CustomerRouter);
-// app.use("/action", ActionRouter);
 app.use("/user", UserRouter);
 
 app.listen(config.app.port, () => {
