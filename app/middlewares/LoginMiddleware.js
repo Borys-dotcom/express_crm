@@ -14,12 +14,12 @@ module.exports = (req, res, next) => {
         .then((user) => {
           res.locals.userId = user._id;
           res.locals.userName = user.username;
+          next();
         })
         .catch((err) => {
           console.log(err);
         });
 
-      next();
     } catch {
       res.status(400).json({
         message: "Verification failure.",

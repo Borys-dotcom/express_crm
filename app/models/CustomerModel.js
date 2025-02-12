@@ -14,6 +14,12 @@ const Customer = new mongoose.Schema({
       ref: "Action"
     },
   ],
+  files: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File"
+    },
+  ],
 });
 
 module.exports = mongoose.model("Customer", Customer);

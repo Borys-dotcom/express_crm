@@ -4,6 +4,8 @@ const CustomerController = require("../controllers/CustomerController");
 
     // GET 
     router.get("/", CustomerController.index);
+    // GET 
+    router.get("/count", CustomerController.count);
     //POST add
     router.post("/add", CustomerController.add)
     //PUT update/:id
@@ -12,5 +14,7 @@ const CustomerController = require("../controllers/CustomerController");
     router.get("/find/:id", CustomerController.find)
     //POST delete/:id
     router.delete("/delete/:id", CustomerController.delete)
+    // GET 
+    router.get("/:page/:limit", CustomerController.indexPagination);
 
 module.exports = router

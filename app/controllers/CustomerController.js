@@ -14,6 +14,38 @@ module.exports = {
       });
   },
 
+  indexPagination: (req, res) => {
+    const page = req.params.page;
+    const limit = req.params.limit;
+    const skip = (page - 1) * limit;
+
+    Customer.find({})
+      .limit(limit)
+      .skip(skip)
+      .then((result) => {
+        res.status(201).json(result);
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          message: "Error while fetching customers data",
+          error: err,
+        });
+      });
+  },
+
+  count: (req, res) => {
+    Customer.countDocuments()
+      .then((customersNumber) => {
+        res.status(201).json(customersNumber);
+      })
+      .catch((err) => {
+        res.status(400).json({
+          message: "Error while counting customers",
+          error: err,
+        });
+      });
+  },
+
   add: (req, res) => {
     const newCustomer = new Customer({
       name: req.body.name,
@@ -70,6 +102,7 @@ module.exports = {
   find: (req, res) => {
     Customer.findById(req.params.id)
       .populate("actions")
+      .populate("files")
       .lean()
       .then((customer) => {
         if (!customer) {

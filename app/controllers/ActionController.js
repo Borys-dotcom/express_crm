@@ -1,10 +1,14 @@
 const Action = require("../models/ActionModel");
 const Customer = require("../models/CustomerModel");
-const app = require("express")
+const User = require("../models/UserModel");
+const app = require("express");
+const mongoose = require("mongoose")
 
 module.exports = {
   index: (req, res) => {
     Action.find(req.params.id ? { customerRef: req.params.id } : {})
+      .populate("creator")
+      .exec()
       .then((actions) => {
         res.status(200).json(actions);
       })
@@ -28,9 +32,11 @@ module.exports = {
   },
 
   create: (req, res) => {
-
-    const newAction = new Action({...req.body, customerRef: req.params.customerId, creator: res.locals.customerId});
-    // const newAction = new Action({...req.body, customerRef: req.params.customerId});
+    const newAction = new Action({
+      ...req.body,
+      customerRef: req.params.customerId,
+      creator: res.locals.userId,
+    });
 
     newAction
       .save()
@@ -63,10 +69,9 @@ module.exports = {
         Customer.updateOne(
           { actions: actionId },
           { $pull: { actions: actionId } }
-        )
-          .catch((err) => {
-            console.log(err);
-          });
+        ).catch((err) => {
+          console.log(err);
+        });
 
         res.status(200).json({
           message: "Action deleted successfully.",
@@ -84,14 +89,13 @@ module.exports = {
     let actionId = req.params.id;
 
     Action.findByIdAndUpdate(actionId, req.body)
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(400).json({
-        error: err
+      .then((response) => {
+        res.status(200).json(response);
       })
-    })
-  
+      .catch((err) => {
+        res.status(400).json({
+          error: err,
+        });
+      });
   },
 };
